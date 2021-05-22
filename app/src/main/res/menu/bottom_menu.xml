@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:title="Profile"
+            android:id="@+id/Profileworkers"
+            />
+        <item android:title="Work"
+            android:id="@+id/workdetails"/>
+        <item android:title="Apply"
+            android:id="@+id/Applyworker" />
+
+</menu>

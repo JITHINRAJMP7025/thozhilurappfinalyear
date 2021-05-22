@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:background="@drawable/loginpage3">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:textAlignment="center"
+        android:text="തൊഴിലുറപ്പ് പദ്ധതി"
+        android:textSize="25dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center_horizontal" />
+    <ImageView
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center"
+        android:layout_width="140dp"
+        android:layout_height="78dp"
+        android:src="@drawable/thozhilurapplogo"/>
+
+
+
+</LinearLayout>

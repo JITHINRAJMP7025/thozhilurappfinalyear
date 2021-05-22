@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    tools:context=".sectionpage"
+    android:background="@drawable/backimagesupdownnew">
+<TextView
+    android:id="@+id/mydate"
+    android:layout_width="160dp"
+    android:layout_height="30dp"
+    android:text="Choose date"
+    android:layout_marginLeft="115dp"
+    android:textAlignment="center"
+    android:textSize="25dp"
+    android:textColor="@color/black"
+    android:layout_marginTop="48dp"
+    android:gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_marginTop="48dp"
+
+        android:background="@drawable/bg_calender"
+        android:layout_marginLeft="44dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
+        <CalendarView
+            android:id="@+id/calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="320dp"></CalendarView>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="34dp"
+        android:background="@drawable/bg_button"
+        android:drawableRight="@drawable/ic_arrow"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Next"
+        android:textColor="@color/black"
+        app:backgroundTint="@null" />
+
+
+
+</LinearLayout>
