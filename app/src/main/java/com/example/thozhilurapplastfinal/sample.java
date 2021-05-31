@@ -1,4 +1,4 @@
-package com.example.thozhilurapplastfinal;
+/*package com.example.profittrader;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.TimeUnit;
 
-public class forgotpswrd extends AppCompatActivity implements View.OnClickListener {
+public class AdminForgotPassword extends AppCompatActivity  implements
+        View.OnClickListener {
     private static final String TAG = "PhoneAuthActivity";
 
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
@@ -47,7 +48,7 @@ public class forgotpswrd extends AppCompatActivity implements View.OnClickListen
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
-    // [END declare_auth]
+// [END declare_auth]
 
     private boolean mVerificationInProgress = false;
     private String mVerificationId;
@@ -58,7 +59,10 @@ public class forgotpswrd extends AppCompatActivity implements View.OnClickListen
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     private ViewGroup mPhoneNumberViews;
+// private ViewGroup mSignedInViews;
 
+    // private TextView mStatusText;
+///private TextView mDetailText;
     private TextView phoneNumberTextView;
 
     private EditText mPhoneNumberField;
@@ -68,18 +72,22 @@ public class forgotpswrd extends AppCompatActivity implements View.OnClickListen
     private Button mStartButton;
     private Button mVerifyButton;
     private Button mResendButton;
-
+    //private Button mSignOutButton;
     private Button verifyuserButton;
     String useridString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgotpswrd);
+        setContentView(R.layout.activity_forgot_password);
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
 
         mPhoneNumberViews = findViewById(R.id.phone_auth_fields);
+        //mSignedInViews = findViewById(R.id.signed_in_buttons);
+
+        //mStatusText = findViewById(R.id.status);
+        //mDetailText = findViewById(R.id.detail);
         phoneNumberTextView=(TextView)findViewById(R.id.phNumberTextView);
 
         mPhoneNumberField = findViewById(R.id.field_phone_number);
@@ -89,27 +97,30 @@ public class forgotpswrd extends AppCompatActivity implements View.OnClickListen
         mStartButton = findViewById(R.id.button_start_verification);
         mVerifyButton = findViewById(R.id.button_verify_phone);
         mResendButton = findViewById(R.id.button_resend);
+        //mSignOutButton = findViewById(R.id.sign_out_button);
         verifyuserButton=findViewById(R.id.verifyuserButton);
 
         Bundle forgetPassword=getIntent().getExtras();
-        if(forgetPassword!=null) {
-            user = forgetPassword.getString("Mobile_id");
-            Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
+        if(forgetPassword!=null){
+            user=forgetPassword.getString("user_id");
+            //  Toast.makeText(MainActivity.this,user, Toast.LENGTH_SHORT).show();
         }
+
         verifyuserButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 useridString=useridEditText.getText().toString();
 
-                DatabaseReference fb_to_read = FirebaseDatabase.getInstance().getReference("users"+"/"+"workers"+"/"+useridString+"/"+"profile");
-                Toast.makeText(forgotpswrd.this,user, Toast.LENGTH_SHORT).show();
+                DatabaseReference fb_to_read = FirebaseDatabase.getInstance().getReference("admins/"+useridString+"/userDetails");
+
+                // Toast.makeText(this, sentChittyID, Toast.LENGTH_SHORT).show();
                 fb_to_read.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         mobileNumberString="+91"+snapshot.child("mobile").getValue(String.class);
-                        phoneNumberTextView.setText("Sending Verification Number To "+mobileNumberString.substring(3,5)+"*****"+mobileNumberString.substring(10,13));
+                        phoneNumberTextView.setText("Sending Verification Number To "+mobileNumberString.substring(3,5)+"***"+mobileNumberString.substring(10,13));
 
-                        Toast.makeText(forgotpswrd.this, mobileNumberString, Toast.LENGTH_SHORT).show();
+
                         mPhoneNumberField.setText(mobileNumberString);
                     }
 
@@ -118,59 +129,92 @@ public class forgotpswrd extends AppCompatActivity implements View.OnClickListen
 
                     }
                 });
+
             }
         });
 
+
+
+
+
+        // Assign click listeners
         mStartButton.setOnClickListener(this);
         mVerifyButton.setOnClickListener(this);
         mResendButton.setOnClickListener(this);
+        //mSignOutButton.setOnClickListener(this);
 
+        // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
-        mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+        // [END initialize_auth]
+        mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-
+                // This callback will be invoked in two situations:
+                // 1 - Instant verification. In some cases the phone number can be instantly
+                //     verified without needing to send or enter a verification code.
+                // 2 - Auto-retrieval. On some devices Google Play services can automatically
+                //     detect the incoming verification SMS and perform verificaiton without
+                //     user action.
                 Log.d(TAG, "onVerificationCompleted:" + credential);
-
+                // [START_EXCLUDE silent]
                 mVerificationInProgress = false;
+                // [END_EXCLUDE]
 
+                // [START_EXCLUDE silent]
+                // Update the UI and attempt sign in with the phone credential
+                //updateUI(STATE_VERIFY_SUCCESS, credential);
+                // [END_EXCLUDE]
                 signInWithPhoneAuthCredential(credential);
             }
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-
+                // This callback is invoked in an invalid request for verification is made,
+                // for instance if the the phone number format is not valid.
                 Log.w(TAG, "onVerificationFailed", e);
                 // [START_EXCLUDE silent]
                 mVerificationInProgress = false;
                 // [END_EXCLUDE]
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                    // Invalid request
+                    // [START_EXCLUDE]
                     mPhoneNumberField.setError("Invalid phone number.");
+                    // [END_EXCLUDE]
                 } else if (e instanceof FirebaseTooManyRequestsException) {
-
+                    // The SMS quota for the project has been exceeded
+                    // [START_EXCLUDE]
                     Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
                             Snackbar.LENGTH_SHORT).show();
+                    // [END_EXCLUDE]
                 }
 
+                // Show a message and update the UI
+                // [START_EXCLUDE]
+                //updateUI(STATE_VERIFY_FAILED);
+                // [END_EXCLUDE]
             }
 
             @Override
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
-
+                // The SMS verification code has been sent to the provided phone number, we
+                // now need to ask the user to enter the code and then construct a credential
+                // by combining the code with a verification ID.
                 Log.d(TAG, "onCodeSent:" + verificationId);
 
-
+                // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
                 mResendToken = token;
 
-
+                // [START_EXCLUDE]
+                // Update UI
+                //updateUI(STATE_CODE_SENT);
+                // [END_EXCLUDE]
             }
         };
-
     }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -233,53 +277,86 @@ public class forgotpswrd extends AppCompatActivity implements View.OnClickListen
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
 
-                            Intent changePasssword=new Intent(forgotpswrd.this,editpassword.class);
+                            Intent changePasssword=new Intent(AdminForgotPassword.this,AdminEditPassword.class);
                             changePasssword.putExtra("user_id",useridString);
                             startActivity(changePasssword);
                             finish();
-
+                            // FirebaseUser user = task.getResult().getUser();
+                            // [START_EXCLUDE]
+                            //updateUI(STATE_SIGNIN_SUCCESS, user);
+                            // [END_EXCLUDE]
 
                         } else {
                             // Sign in failed, display a message and update the UI
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-
+                                // The verification code entered was invalid
+                                // [START_EXCLUDE silent]
                                 mVerificationField.setError("Invalid code.");
-
+                                // [END_EXCLUDE]
                             }
-
+                            // [START_EXCLUDE silent]
+                            // Update UI
+                            // updateUI(STATE_SIGNIN_FAILED);
+                            // [END_EXCLUDE]
                         }
                     }
                 });
     }
+//    private void signOut() {
+//        mAuth.signOut();
+//        updateUI(STATE_INITIALIZED);
+//    }
 
+//    private void updateUI(int uiState) {
+//        updateUI(uiState, mAuth.getCurrentUser(), null);
+//    }
+//
+//    private void updateUI(FirebaseUser user) {
+//        if (user != null) {
+//            updateUI(STATE_SIGNIN_SUCCESS, user);
+//        } else {
+//            updateUI(STATE_INITIALIZED);
+//        }
+//    }
+
+    //    private void updateUI(int uiState, FirebaseUser user) {
+//        updateUI(uiState, user, null);
+//    }
+//
+//    private void updateUI(int uiState, PhoneAuthCredential cred) {
+//        updateUI(uiState, null, cred);
+//    }
+//
     private void updateUI(int uiState, FirebaseUser user, PhoneAuthCredential cred) {
         switch (uiState) {
             case STATE_INITIALIZED:
+                // Initialized state, show only the phone number field and start button
                 enableViews(mStartButton, mPhoneNumberField);
                 disableViews(mVerifyButton, mResendButton, mVerificationField);
-
+                /// mDetailText.setText(null);
                 break;
             case STATE_CODE_SENT:
+                // Code sent state, show the verification field, the
                 enableViews(mVerifyButton, mResendButton, mPhoneNumberField, mVerificationField);
                 disableViews(mStartButton);
-
+                // mDetailText.setText(R.string.status_code_sent);
                 Toast.makeText(this, "Status Code Sent", Toast.LENGTH_SHORT).show();
                 break;
             case STATE_VERIFY_FAILED:
-
+                // Verification has failed, show all options
                 enableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
-
+                //mDetailText.setText(R.string.status_verification_failed);
                 Toast.makeText(this, "Verification Failed", Toast.LENGTH_SHORT).show();
                 break;
             case STATE_VERIFY_SUCCESS:
-
+                // Verification has succeeded, proceed to firebase sign in
                 disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
-
+                // mDetailText.setText(R.string.status_verification_succeeded);
                 Toast.makeText(this, "Verification Succes", Toast.LENGTH_SHORT).show();
-
+                // Set the verification text based on the credential
                 if (cred != null) {
                     if (cred.getSmsCode() != null) {
                         mVerificationField.setText(cred.getSmsCode());
@@ -290,27 +367,32 @@ public class forgotpswrd extends AppCompatActivity implements View.OnClickListen
 
                 break;
             case STATE_SIGNIN_FAILED:
-
+                // No-op, handled by sign-in check
+                //mDetailText.setText(R.string.status_sign_in_failed);
                 Toast.makeText(this, "Sign in Failed", Toast.LENGTH_SHORT).show();
                 break;
             case STATE_SIGNIN_SUCCESS:
+                // Np-op, handled by sign-in check
                 break;
         }
 
         if (user == null) {
-
+            // Signed out
             mPhoneNumberViews.setVisibility(View.VISIBLE);
+            // mSignedInViews.setVisibility(View.GONE);
 
+            //  mStatusText.setText(R.string.signed_out);
         } else {
-
+            // Signed in
             mPhoneNumberViews.setVisibility(View.GONE);
-
+            //  mSignedInViews.setVisibility(View.VISIBLE);
 
             enableViews(mPhoneNumberField, mVerificationField);
             mPhoneNumberField.setText(null);
             mVerificationField.setText(null);
 
-
+            // mStatusText.setText(R.string.signed_in);
+            //  mDetailText.setText(getString(R.string.firebase_status_fmt, user.getUid()));
         }
     }
     private boolean validatePhoneNumber() {
@@ -355,11 +437,9 @@ public class forgotpswrd extends AppCompatActivity implements View.OnClickListen
             case R.id.button_resend:
                 resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
                 break;
-
+//            case R.id.sign_out_button:
+//                signOut();
+//                break;
         }
     }
-
-}
-
-
-
+}*/

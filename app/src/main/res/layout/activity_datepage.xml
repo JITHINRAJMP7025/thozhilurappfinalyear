@@ -56,6 +56,29 @@
         android:text="Add"
         app:backgroundTint="@color/pink"></Button>
 
+    <ImageView
+        android:id="@+id/camera"
+        android:layout_width="68dp"
+        android:layout_height="46dp"
+        android:layout_below="@+id/scrollview"
+        android:layout_marginLeft="115dp"
+        android:layout_marginTop="4dp"
+        android:layout_toRightOf="@+id/addbutton"
+        android:background="@drawable/ic_baseline_camera_alt_24"
+        tools:ignore="UnknownId"
+       android:onClick="uploadimage"/>
+
+    <ImageView
+        android:id="@+id/myimage"
+        android:layout_width="76dp"
+        android:layout_height="29dp"
+        android:layout_below="@+id/scrollview"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"
+
+        android:layout_toRightOf="@+id/addbutton"
+        tools:ignore="UnknownId" />
+
     <Button
         android:id="@+id/submitbutton"
         android:layout_width="387dp"

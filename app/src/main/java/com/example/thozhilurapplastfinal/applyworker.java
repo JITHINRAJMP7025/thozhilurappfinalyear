@@ -52,7 +52,7 @@ public class applyworker extends AppCompatActivity {
         setContentView(R.layout.activity_applyworker);
         Bundle login = getIntent().getExtras();
         if (login != null) {
-            user_mobid = login.getString("mobile_id");
+            user_mobid = login.getString("usermob_id");
 
             Toast.makeText(applyworker.this, user_mobid, Toast.LENGTH_SHORT).show();
         }
@@ -63,7 +63,7 @@ public class applyworker extends AppCompatActivity {
         adharno = (EditText) findViewById(R.id.edit_adhar);
         bankno = (EditText) findViewById(R.id.edit_bank);
         applverify = (TextView) findViewById(R.id.applystatus);
-        choosepic = (TextView) findViewById(R.id.prflpictextview);
+
         chooseadhar = (TextView) findViewById(R.id.adharpictextview);
         applyuser = (Button) findViewById(R.id.apply);
         panchayat = (Spinner) findViewById(R.id.editheading);
@@ -94,6 +94,7 @@ public class applyworker extends AppCompatActivity {
                 adharno1 = adharno.getText().toString();
                 bankno1 = bankno.getText().toString();
                 user_id = "users" + "/" + "workers" + "/" + user_mobid;
+                Toast.makeText(applyworker.this, user_id, Toast.LENGTH_SHORT).show();
 
                 String details = user_id + "/" + "Applydetails";
                 String workername = details + "/" + "name";

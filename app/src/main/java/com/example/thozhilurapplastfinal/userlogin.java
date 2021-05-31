@@ -47,10 +47,10 @@ public class userlogin extends AppCompatActivity {
         password=(EditText)findViewById(R.id.password);
 
 
-        SharedPreferences lDetails =  getSharedPreferences("logdetails", MODE_PRIVATE);
+       /* SharedPreferences lDetails =  getSharedPreferences("logdetails", MODE_PRIVATE);
         check_ID = lDetails.getString("mobile","0");
         check_Password = lDetails.getString("password1","0");
-        Toast.makeText(userlogin.this, check_ID, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(userlogin.this, check_ID, Toast.LENGTH_SHORT).show();*/
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

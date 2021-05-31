@@ -11,6 +11,8 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,15 +33,22 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
+
+import static com.squareup.picasso.Picasso.setSingletonInstance;
+
  public class userprofile extends AppCompatActivity {
     String passed_id;
+    Button ret;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference getRef1,getRef2;
+    DatabaseReference getRef1,getRef2,getRef4,image;
     private StorageReference mstorageref;
      ImageView imageView;
      private Uri imageuri;
@@ -60,6 +70,7 @@ import com.squareup.picasso.Picasso;
             Toast.makeText(userprofile.this, passed_id, Toast.LENGTH_SHORT).show();
 
         }
+       // ret=(Button)findViewById(R.id.button);
         choose=(TextView)findViewById(R.id.chooseimage);
         upload=(TextView)findViewById(R.id.upload);
         imageView=(ImageView)findViewById(R.id.roundedimage);
@@ -69,6 +80,7 @@ import com.squareup.picasso.Picasso;
         mstorageref = FirebaseStorage.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "Applydetails" + "/" + "photo");
         getRef1 = FirebaseDatabase.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "profile" );
         getRef2 = FirebaseDatabase.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "Applydetails" + "/" + "photo" );
+        getRef4 = FirebaseDatabase.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "Applydetails" + "/" + "photo" );
         getRef1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -92,7 +104,7 @@ import com.squareup.picasso.Picasso;
                 editor.putString("password1","0" );
                 editor.commit();
 
-                Intent login=new Intent(userprofile.this,userlogin.class);
+                Intent login=new Intent(userprofile.this,selectsection.class);
                 finish();
                 startActivity(login);
                 System.exit(0);
@@ -106,11 +118,16 @@ import com.squareup.picasso.Picasso;
                     case R.id.Profileworkers:
                          return;
                     case R.id.workdetails:
-                        startActivity(new Intent(getApplicationContext(), workersdetails.class));
+                        Intent intent1 = new Intent(userprofile.this, workdetails.class);
+                        intent1.putExtra("usermob_id", passed_id);
+                        startActivity(intent1);
                         overridePendingTransition(0, 0);
                          return;
                     case R.id.Applyworker:
                         startActivity(new Intent(getApplicationContext(), applyworker.class));
+                        Intent intent2 = new Intent(userprofile.this, applyworker.class);
+                        intent2.putExtra("usermob_id", passed_id);
+                        startActivity(intent2);
                         overridePendingTransition(0, 0);
                          return;
                 }
@@ -129,6 +146,32 @@ import com.squareup.picasso.Picasso;
                 uploadfile();
             }
         });
+      /*  ret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //();
+                mstorageref = FirebaseStorage.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "Applydetails" + "/" + "photo");
+                try {
+                    File localfile= File.createTempFile("tempfile",".jpg");
+                    mstorageref.getFile(localfile)
+                      .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                          @Override
+                          public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                              Bitmap bitmap= BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                              imageView.setImageBitmap(bitmap);
+
+                          }
+                      }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });*/
 
 
     }
@@ -167,7 +210,6 @@ import com.squareup.picasso.Picasso;
                              getRef2.child(uploadid).setValue(upload1);
                              Toast.makeText(userprofile.this, "upload Successful", Toast.LENGTH_SHORT).show();
 
-
                          }
                      })
                      .addOnFailureListener(new OnFailureListener() {
@@ -178,6 +220,10 @@ import com.squareup.picasso.Picasso;
                      });
 
          }
-     }
 
+     }
+/*private void show(){
+    mstorageref = FirebaseStorage.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "Applydetails" + "/" + "photo");
+    Glide.with(this).load(mstorageref).into(imageView);
+    }*/
  }

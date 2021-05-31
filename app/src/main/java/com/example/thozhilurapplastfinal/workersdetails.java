@@ -59,7 +59,7 @@ public class workersdetails extends AppCompatActivity {
 
 
 
-        mstorageref= FirebaseStorage.getInstance().getReference("users"+"/"+"workers"+"/"+passed_id+"/"+"Applydetails");
+     /*  mstorageref= FirebaseStorage.getInstance().getReference("users"+"/"+"workers"+"/"+passed_id+"/"+"Applydetails");
         getRef2= FirebaseDatabase.getInstance().getReference("users"+"/"+"workers"+"/"+passed_id+"/"+"Applydetails");
 
         chooseimage=(TextView) findViewById(R.id.choose);
@@ -79,7 +79,7 @@ public class workersdetails extends AppCompatActivity {
             public void onClick(View v) {
                 uploadfile();
             }
-        });
+        });*/
         bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
             public void onNavigationItemReselected(@NonNull MenuItem item) {
@@ -98,7 +98,7 @@ public class workersdetails extends AppCompatActivity {
             }
         });
     }
-    private  void openFileChooser(){
+   /* private  void openFileChooser(){
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -148,5 +148,5 @@ private void uploadfile()
     {
         Toast.makeText(this,"No file selected",Toast.LENGTH_SHORT).show();
     }
-}
+}*/
 }

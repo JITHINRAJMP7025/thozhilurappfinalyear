@@ -32,14 +32,14 @@ public class applywork extends AppCompatActivity {
     Button apply, chooseimage;
     EditText cardno, name, mobile;
     TextView applyverify;
-    String cardno1, name1, mobile1, chooseimage1, user_mobid;
+    String cardno1, name1, mobile1, chooseimage1, user_mobid,userid;
     String passed_id=null;
     private StorageReference m1storageref;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference getRef1, getRef2;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageuri;
-    int num=1;
+    int num=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,21 +66,19 @@ public class applywork extends AppCompatActivity {
             public void onClick(View v) {
                 openFileChooser();
             }
-        });
+       });
 
-      //  add();
-       
-       // uploadfile();
+         getcount();
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 name1 = name.getText().toString();
                 cardno1 = cardno.getText().toString();
                 mobile1 = mobile.getText().toString();
+                userid ="users"+"/"+"leader"+"/"+ passed_id+"/" + "applywork" ;
+                String details=userid+"/"+cardno1;
                 if(mobile1.length()==10) {
-                    //getRef1=FirebaseDatabase.getInstance().getReference("users" + "/" + "leader"+"/" +passed_id+ "/" + "applywork"+"/"+num);
-                   // user_mobid = "users" + "/" + "leader";
-                    String details ="users"+"/"+"leader"+"/"+ passed_id+"/" + "applywork" + "/" + cardno1;
+
 
                     String leadername = details + "/" + "name";
                     String leaderno = details + "/" + "cardno";
@@ -89,19 +87,37 @@ public class applywork extends AppCompatActivity {
                     DatabaseReference leadername1 = mDatabase.getReference(leadername);
                     DatabaseReference leaderno1 = mDatabase.getReference(leaderno);
                     DatabaseReference leadermobileno1 = mDatabase.getReference(mobileno);
-                    DatabaseReference applycount = mDatabase.getReference("users" + "/" + "leader" + "/" +passed_id +"/"+ "applywork"+"/"+cardno1);
-                    num=num+1;
+                    DatabaseReference applycount = mDatabase.getReference("users" + "/" + "leader" + "/" +passed_id +"/"+ "applywork"+"/"+"applycount");
+                     num=num+1;
                     leadername1.setValue(name1);
                     leaderno1.setValue(cardno1);
                     leadermobileno1.setValue(mobile1);
                     applycount.setValue(num);
-                    applyverify.setText("Applied");
+                 //   applyverify.setText("Applied");
                     // finish();
                     uploadfile();
                 }
                 else{
                     Toast.makeText(applywork.this, "invalid mobile number", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+    }
+
+    private void getcount()
+    {
+        DatabaseReference fb_to_read = FirebaseDatabase.getInstance().getReference("users" + "/" + "leader" + "/" +passed_id +"/"+ "applywork");
+        fb_to_read.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                num= (int) snapshot.getChildrenCount();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -135,9 +151,7 @@ public class applywork extends AppCompatActivity {
 
     private void uploadfile() {
         getRef1=FirebaseDatabase.getInstance().getReference("users" + "/" + "leader" + "/" +passed_id+"/"+"applywork"+"/"+cardno1);
-        //String details = user_mobid + "/" + "applywork" + "/" + num;
-        //String image = details + "/" + "taxpic";
-       // getRef2 = FirebaseDatabase.getInstance().getReference("users" + "/" + "leader"+"/"+"applywork"+"/"+num);
+
         m1storageref = FirebaseStorage.getInstance().getReference("users" + "/" + "leader"+"/" +passed_id+ "/" +  "applywork"+"/"+cardno1 );
 
         if ( imageuri != null) {

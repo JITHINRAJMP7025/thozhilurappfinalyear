@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.thozhilurapplastfinal">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thozhilurapplastfinal">
-        <activity android:name=".changepassword"></activity>
+        <activity android:name=".sample"></activity>
+        <activity android:name=".changepassword" />
         <activity android:name=".sidebar" />
         <activity android:name=".editpassword" />
         <activity android:name=".addleader" />
@@ -20,26 +22,18 @@
         <activity android:name=".leaderdynamic" />
         <activity android:name=".datepage" />
         <activity android:name=".sectionpage" />
-        <activity android:name=".leaderlogin"
-            />
+        <activity android:name=".leaderlogin" />
         <activity android:name=".workdetails" />
         <activity android:name=".applywork" />
         <activity android:name=".leaderfirstpage" />
-        <activity android:name=".selectsection"
-            />
-        <activity android:name=".workersdetails"
-          />
-        <activity android:name=".applyworker"
-         />
-        <activity android:name=".forgotpswrd"
-            />
+        <activity android:name=".selectsection" />
+        <activity android:name=".workersdetails" />
+        <activity android:name=".applyworker" />
+        <activity android:name=".forgotpswrd" />
         <activity android:name=".userprofile" />
-        <activity android:name=".signup"
-            />
-        <activity android:name=".userlogin"
-            />
-        <activity android:name=".MainActivity"
-           >
+        <activity android:name=".signup" />
+        <activity android:name=".userlogin" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

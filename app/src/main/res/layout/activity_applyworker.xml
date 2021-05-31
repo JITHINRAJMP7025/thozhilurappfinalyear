@@ -19,21 +19,24 @@ android:background="@drawable/backimagesupdownnew"
         android:textStyle="bold" />
 
     <Spinner
+        android:layout_marginTop="27dp"
         android:id="@+id/editheading"
         android:layout_width="398dp"
         android:layout_height="45dp"
-        android:layout_below="@+id/heading" />
+        android:layout_below="@+id/heading"
+        />
 
 
     <TextView
         android:id="@+id/name_worker"
-        android:layout_width="94dp"
+        android:layout_width="96dp"
         android:layout_height="47dp"
         android:layout_below="@+id/heading"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="96dp"
         android:text=" Name"
         android:textColor="#0E0E0E"
         android:textSize="18sp" />
+
 
     <EditText
         android:id="@+id/edit_name"
@@ -42,17 +45,16 @@ android:background="@drawable/backimagesupdownnew"
         android:layout_below="@+id/heading"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="96dp"
         android:layout_marginRight="9dp"
         android:layout_toRightOf="@+id/name_worker" />
-
 
     <TextView
         android:id="@+id/addrs_worker"
         android:layout_width="86dp"
         android:layout_height="39dp"
         android:layout_below="@+id/name_worker"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text=" Address"
         android:textColor="#0E0E0E"
         android:textSize="18sp" />
@@ -65,56 +67,17 @@ android:background="@drawable/backimagesupdownnew"
         android:layout_below="@+id/edit_name"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="7dp"
         android:layout_toRightOf="@+id/addrs_worker"
         android:inputType="textPostalAddress" />
-
-
-    <TextView
-        android:id="@+id/prflpic_worker"
-        android:layout_width="104dp"
-        android:layout_height="43dp"
-        android:layout_below="@+id/addrs_worker"
-        android:layout_marginTop="30dp"
-        android:text=" Photo"
-        android:textColor="#0E0E0E"
-        android:textSize="18sp" />
-
-
-    <TextView
-        android:id="@+id/prflpictextview"
-        android:layout_width="165dp"
-        android:layout_height="38dp"
-        android:layout_below="@+id/edit_address"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_toRightOf="@+id/prflpic_worker"
-        android:background="@color/white"
-        android:text="   CHOOSE IMAGE"
-        android:textColor="@color/black"
-        android:textSize="19sp" />
-
-
-    <TextView
-        android:id="@+id/uploadphoto"
-        android:layout_width="77dp"
-        android:layout_height="38dp"
-        android:layout_below="@+id/edit_address"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="30dp"
-        android:layout_toRightOf="@+id/prflpictextview"
-        android:background="@color/white"
-        android:text=" upload"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/adhar_worker"
         android:layout_width="93dp"
         android:layout_height="44dp"
-        android:layout_below="@+id/prflpic_worker"
-        android:layout_marginTop="21dp"
+        android:layout_below="@+id/addrs_worker"
+        android:layout_marginTop="20dp"
         android:text=" Adhar"
         android:textColor="#0E0E0E"
         android:textSize="18sp" />
@@ -123,10 +86,10 @@ android:background="@drawable/backimagesupdownnew"
         android:id="@+id/edit_adhar"
         android:layout_width="306dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/prflpictextview"
+        android:layout_below="@+id/edit_address"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="3dp"
         android:layout_toRightOf="@+id/adhar_worker"
         android:inputType="textPostalAddress" />
@@ -136,7 +99,7 @@ android:background="@drawable/backimagesupdownnew"
         android:layout_width="93dp"
         android:layout_height="44dp"
         android:layout_below="@+id/adhar_worker"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="20dp"
         android:text=" Adhar"
         android:textColor="#0E0E0E"
         android:textSize="18sp" />
@@ -148,7 +111,7 @@ android:background="@drawable/backimagesupdownnew"
         android:layout_height="38dp"
         android:layout_below="@+id/edit_adhar"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="20dp"
 
         android:layout_toRightOf="@+id/adharpic_worker"
         android:background="@color/white"
@@ -156,27 +119,14 @@ android:background="@drawable/backimagesupdownnew"
         android:textColor="#0E0E0E"
         android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/useradharpic"
-        android:layout_width="79dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/edit_adhar"
-        android:layout_marginStart="37dp"
-        android:layout_marginLeft="43dp"
-        android:layout_marginTop="14dp"
-        android:layout_toRightOf="@+id/adharpictextview"
-        android:background="@color/white"
-        android:text="  upload"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:backgroundTint="@color/white" />
+
 
     <TextView
         android:id="@+id/bank_worker"
         android:layout_width="wrap_content"
         android:layout_height="49dp"
         android:layout_below="@+id/adharpic_worker"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="25dp"
         android:text=" BankAcNo"
         android:textColor="#0E0E0E"
         android:textSize="18sp" />
@@ -185,10 +135,10 @@ android:background="@drawable/backimagesupdownnew"
         android:id="@+id/edit_bank"
         android:layout_width="306dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/useradharpic"
+        android:layout_below="@+id/adharpictextview"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="25dp"
         android:layout_marginRight="2dp"
         android:layout_toRightOf="@+id/bank_worker" />
 
@@ -198,7 +148,7 @@ android:background="@drawable/backimagesupdownnew"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bank_worker"
         android:layout_marginLeft="46dp"
-        android:layout_marginTop="-13dp"
+        android:layout_marginTop="25dp"
         android:text="Apply"
         android:textColor="@color/black"
         app:backgroundTint="@color/white" />
@@ -209,7 +159,7 @@ android:background="@drawable/backimagesupdownnew"
         android:layout_height="30dp"
         android:layout_below="@+id/edit_bank"
         android:layout_marginLeft="23dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="25dp"
         android:layout_toRightOf="@+id/apply" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

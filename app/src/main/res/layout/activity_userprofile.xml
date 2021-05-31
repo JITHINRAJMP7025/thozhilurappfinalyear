@@ -62,7 +62,7 @@
         android:layout_below="@id/myCardView"
         android:layout_marginTop="75dp"
         android:drawableLeft="@drawable/ic_baseline_person_24"
-        android:text="name"
+        android:text="Name"
         android:textColor="#070707"
         android:textSize="30dp" />
 
@@ -87,7 +87,7 @@
         android:layout_below="@+id/name"
         android:layout_marginTop="22dp"
         android:drawableLeft="@drawable/ic_baseline_phone_android_24"
-        android:text="mobile"
+        android:text="Mobile"
         android:textColor="#070707"
         android:textSize="30dp" />
 
@@ -113,7 +113,7 @@
         android:layout_below="@+id/mob"
         android:layout_marginTop="19dp"
         android:drawableLeft="@drawable/ic_outline_book_24"
-        android:text="card"
+        android:text="Card"
         android:textColor="#070707"
         android:textSize="30dp" />
 
@@ -141,12 +141,13 @@
         android:layout_alignParentRight="true"
         android:layout_marginStart="118dp"
         android:layout_marginLeft="118dp"
-        android:layout_marginTop="204dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="117dp"
         android:layout_marginRight="117dp"
-        android:text="               Logout"
         android:layout_marginBottom="5dp"
-        android:textSize="18sp" />
+        android:text="Logout" android:textColor="@color/white"
+        android:textSize="18sp" android:textAlignment="center" />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomnavigationview"

@@ -67,7 +67,7 @@ String passed_id;
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.logout:
-                        Intent intent = new Intent(leaderfirstpage.this, panchayat.class);
+                        Intent intent = new Intent(leaderfirstpage.this, selectsection.class);
                         startActivity(intent);
                         break;
 

@@ -112,7 +112,9 @@
                     android:layout_weight="1.0"
                     android:background="@drawable/round_button2"
                     android:hint="verification code"
-                    android:text="VERIFY USER" />
+                    android:text="VERIFY USER"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@null" />
 
             </LinearLayout>
 
@@ -136,6 +138,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:hint="phone number"
+
                     android:visibility="invisible"
                     android:inputType="phone" />
 
@@ -149,23 +152,26 @@
                 android:weightSum="2.0">
 
 
-
                 <Button
-                    android:background="@drawable/round_button2"
                     android:id="@+id/button_start_verification"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="Start"/>
+                    android:background="@drawable/round_button2"
+                    android:text="Start"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@null" />
 
 
                 <Button
-                    android:background="@drawable/round_button2"
                     android:id="@+id/button_resend"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="resend"/>
+                    android:background="@drawable/round_button2"
+                    android:text="resend"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@null" />
 
 
             </LinearLayout>
@@ -185,12 +191,14 @@
                     android:inputType="number"/>
 
                 <Button
-                    android:background="@drawable/round_button2"
                     android:id="@+id/button_verify_phone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="verify"/>
+                    android:background="@drawable/round_button2"
+                    android:text="verify"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@null" />
 
             </LinearLayout>
 
