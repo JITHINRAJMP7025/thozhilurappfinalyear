@@ -39,6 +39,7 @@ String user_id,password_id;
         userid=(EditText)findViewById(R.id.userid);
         password=(EditText)findViewById(R.id.password);
         login=(Button)findViewById(R.id.login);
+        forgotpassword=(TextView)findViewById(R.id.forgotpassword);
         login.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -92,7 +93,16 @@ String user_id,password_id;
 
         }
         });
+     forgotpassword.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             user_id = userid.getText().toString();
+             Intent intent=new Intent(leaderlogin.this,leaderforgotpswrd.class);
+             intent.putExtra("userid_id", user_id);//change code here
 
+             startActivity(intent);
+         }
+     });
 
     }
 

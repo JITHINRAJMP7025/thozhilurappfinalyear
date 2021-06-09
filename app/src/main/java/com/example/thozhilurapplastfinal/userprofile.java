@@ -70,7 +70,7 @@ import static com.squareup.picasso.Picasso.setSingletonInstance;
             Toast.makeText(userprofile.this, passed_id, Toast.LENGTH_SHORT).show();
 
         }
-       // ret=(Button)findViewById(R.id.button);
+        ret=(Button)findViewById(R.id.button1);
         choose=(TextView)findViewById(R.id.chooseimage);
         upload=(TextView)findViewById(R.id.upload);
         imageView=(ImageView)findViewById(R.id.roundedimage);
@@ -146,19 +146,23 @@ import static com.squareup.picasso.Picasso.setSingletonInstance;
                 uploadfile();
             }
         });
-      /*  ret.setOnClickListener(new View.OnClickListener() {
+       /* ret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //();
-                mstorageref = FirebaseStorage.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "Applydetails" + "/" + "photo");
+                //
+                mstorageref= FirebaseStorage.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "Applydetails" ).child("photo");
+
                 try {
-                    File localfile= File.createTempFile("tempfile",".jpg");
-                    mstorageref.getFile(localfile)
+
+                    File localfile= File.createTempFile("tempfile",".jpeg");
+                    mstorageref.getFile(localfile);
+                    Bitmap bitmap= BitmapFactory.decodeFile(localfile.getAbsolutePath());
+                    imageView.setImageBitmap(bitmap);
+                    Toast.makeText(userprofile.this, "hai", Toast.LENGTH_SHORT).show();
+                   // Picasso.with(this).load(imageuri).into(imageView);
                       .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                           @Override
                           public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                              Bitmap bitmap= BitmapFactory.decodeFile(localfile.getAbsolutePath());
-                              imageView.setImageBitmap(bitmap);
 
                           }
                       }).addOnFailureListener(new OnFailureListener() {
@@ -186,10 +190,11 @@ import static com.squareup.picasso.Picasso.setSingletonInstance;
          super.onActivityResult(requestCode, resultCode, data);
          if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
              imageuri = data.getData();
-             Picasso.with(this).load(imageuri).into(imageView);
+            Picasso.with(this).load(imageuri).into(imageView);
          }
 
      }
+
      private String getFileExtension(Uri uri) {
          ContentResolver cr = getContentResolver();
          MimeTypeMap mime = MimeTypeMap.getSingleton();

@@ -73,6 +73,7 @@ String passed_id;
 
                     case R.id.changepassword:
                         Intent intent1 = new Intent(leaderfirstpage.this, changepassword.class);
+                        intent1.putExtra("userid_id", passed_id);
                         startActivity(intent1);
                         break;
                 }

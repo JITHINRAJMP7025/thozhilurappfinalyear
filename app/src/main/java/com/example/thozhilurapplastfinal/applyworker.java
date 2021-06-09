@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -24,28 +25,38 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class applyworker extends AppCompatActivity {
     String user_mobid;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference getRef1, getRef2, getRef3;
+    DatabaseReference getRef1, getRef2, getRef3,getRef4;
     EditText name, address, adharno, bankno;
     TextView applverify, choosepic, chooseadhar, uploadpic, adharpic;
     Button pic, applyuser;
     Spinner panchayat;
     String name1, address1, adharno1, bankno1, user_id;
     ImageView mImageView;
+    public String panchayatidname;
     private StorageReference m1storageref;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageuri;
-
+    List<String> panchyatid = new ArrayList<>();
+//ValueEventListener listeneer;
+//ArrayAdapter<String> adapter;
+//ArrayList<String> spinnerDatalist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,22 +77,49 @@ public class applyworker extends AppCompatActivity {
 
         chooseadhar = (TextView) findViewById(R.id.adharpictextview);
         applyuser = (Button) findViewById(R.id.apply);
-        panchayat = (Spinner) findViewById(R.id.editheading);
+        panchayat = (Spinner) findViewById(R.id.panchayatname);
+       // spinnerDatalist =new ArrayList<>();
+      //  adapter = new ArrayAdapter<String>(applyworker.this, android.R.layout.simple_spinner_dropdown_item,spinnerDatalist);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, panchyatid);
+
 
 
 
         getRef3 = FirebaseDatabase.getInstance().getReference("users" + "/" + "workers" + "/" + user_mobid + "/" + "Applydetails" + "/" + "adharphoto");
         getRef1 = FirebaseDatabase.getInstance().getReference("users" + "/" + "workers" + "/" + user_mobid + "/" + "Applydetails");
         m1storageref = FirebaseStorage.getInstance().getReference("users" + "/" + "workers" + "/" + user_mobid + "/" + "Applydetails" + "/" + "adharphoto");
+        getRef4 = FirebaseDatabase.getInstance().getReference("users"+"/"+"Admin");
+
+        DatabaseReference fb_to_read = FirebaseDatabase.getInstance().getReference("users"+"/"+"Admin");
+        fb_to_read.addValueEventListener(new ValueEventListener() {
+                                             @Override
+                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                 List<String> list=new ArrayList<String>();
+                                                 for (DataSnapshot dsp : snapshot.getChildren()){
+                                                     list.add(String.valueOf(dsp.getKey()));
+                                                 }
+                                                 for(final String data:list) {
+                                                     Toast.makeText(applyworker.this, data, Toast.LENGTH_SHORT).show();
+                                                     panchyatid.add(data);
+                                                 }
+                                                // adapter = new ArrayAdapter<String>(applyworker.this, android.R.layout.simple_spinner_dropdown_item,spinnerDatalist);
+                                                 panchayat.setAdapter(arrayAdapter);
+
+                                             }
+
+                                             @Override
+                                             public void onCancelled(@NonNull DatabaseError error) {
+
+                                             }
+                                         });
 
 
-
-        chooseadhar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFileChooser();
-            }
-        });
+                chooseadhar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openFileChooser();
+                    }
+                });
 
 
         applyuser.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +131,7 @@ public class applyworker extends AppCompatActivity {
                 address1 = address.getText().toString();
                 adharno1 = adharno.getText().toString();
                 bankno1 = bankno.getText().toString();
+                panchayatidname= panchayat.getSelectedItem().toString();
                 user_id = "users" + "/" + "workers" + "/" + user_mobid;
                 Toast.makeText(applyworker.this, user_id, Toast.LENGTH_SHORT).show();
 
@@ -101,17 +140,21 @@ public class applyworker extends AppCompatActivity {
                 String workeraddress = details + "/" + "address";
                 String adharno = details + "/" + "adharno";
                 String bankno = details + "/" + "bankno";
+                String panchaytname=details +"/"+"panchayatname";
+
 
 
                 DatabaseReference Workername1 = mDatabase.getReference(workername);
                 DatabaseReference workeraddress1 = mDatabase.getReference(workeraddress);
                 DatabaseReference workeradharno1 = mDatabase.getReference(adharno);
                 DatabaseReference workerbankno1 = mDatabase.getReference(bankno);
+                DatabaseReference workerpanchayat = mDatabase.getReference(panchaytname);
 
                 Workername1.setValue(name1);
                 workeraddress1.setValue(address1);
                 workeradharno1.setValue(adharno1);
                 workerbankno1.setValue(bankno1);
+                workerpanchayat.setValue(panchayatidname);
                 uploadfile();
                // uploadfile1();
 
@@ -149,6 +192,7 @@ public class applyworker extends AppCompatActivity {
 
 
     }
+
 
 
     private void openFileChooser() {

@@ -125,8 +125,10 @@ public class userlogin extends AppCompatActivity {
         forgotpswrd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mobile_id=mob.getText().toString();
                 Intent forgotIntent = new Intent(userlogin.this, forgotpswrd.class);
                 forgotIntent.putExtra("Mobile_id", mobile_id);
+                Toast.makeText(userlogin.this, mobile_id, Toast.LENGTH_SHORT).show();
                 startActivity(forgotIntent);
 
             }
