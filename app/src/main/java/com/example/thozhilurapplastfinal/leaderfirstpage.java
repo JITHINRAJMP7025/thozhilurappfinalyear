@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class leaderfirstpage extends AppCompatActivity {
 Button apply,workdetails;
-String passed_id;
+String passed_id,panchayatid;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference getRef1;
     private DrawerLayout mDrawerlayout;
@@ -39,10 +39,12 @@ String passed_id;
         Bundle login = getIntent().getExtras();
         if (login != null) {
             passed_id = login.getString("userid_id");
-
-            Toast.makeText(leaderfirstpage.this, passed_id, Toast.LENGTH_SHORT).show();
+           // panchayatid=login.getString("panchayatname_id");
+            Toast.makeText(leaderfirstpage.this, panchayatid, Toast.LENGTH_SHORT).show();
 
         }
+
+
         getRef1=FirebaseDatabase.getInstance().getReference("users" + "/" + "leader" + "/" + passed_id);
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
