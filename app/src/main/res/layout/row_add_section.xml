@@ -30,7 +30,7 @@
         android:layout_width="123dp"
         android:layout_height="41dp" />
 
-    <ImageView
+    <Button
         android:id="@+id/imageclose"
         android:layout_width="76dp"
         android:layout_height="41dp"
@@ -38,8 +38,9 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="10dp"
         android:background="@color/pink"
-        android:backgroundTint="@color/pink"
-        android:src="@drawable/ic_close" />
+        android:backgroundTint="@null"
+        android:text="Add"
+        app:backgroundTint="@null" />
 </LinearLayout>
 
 

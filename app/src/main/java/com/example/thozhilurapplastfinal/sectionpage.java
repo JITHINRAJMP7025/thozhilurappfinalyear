@@ -74,7 +74,7 @@ public class sectionpage extends AppCompatActivity {
                 bundle.putString("date_id", date1);
                 bundle.putString("user_id",passed_id);
                 intent.putExtras(bundle);
-                Toast.makeText(sectionpage.this, passed_id, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(sectionpage.this, passed_id, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });

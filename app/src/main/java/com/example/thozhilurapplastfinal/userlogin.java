@@ -79,11 +79,11 @@ public class userlogin extends AppCompatActivity {
 
                                         if (pass.equals(password_id.toString())) {
 
-                                           SharedPreferences loginDetails = getSharedPreferences("logdetails", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = loginDetails.edit();
-                                            editor.putString("mobile", mobile_id);
-                                            editor.putString("password1", password_id);
-                                            editor.commit();
+                                         //  SharedPreferences loginDetails = getSharedPreferences("logdetails", MODE_PRIVATE);
+                                           // SharedPreferences.Editor editor = loginDetails.edit();
+                                           // editor.putString("mobile", mobile_id);
+                                           // editor.putString("password1", password_id);
+                                           // editor.commit();
 
                                             Intent login = new Intent(userlogin.this, userprofile.class);
                                             login.putExtra("Mobile_id", mobile_id);//change code here
@@ -128,7 +128,7 @@ public class userlogin extends AppCompatActivity {
                 mobile_id=mob.getText().toString();
                 Intent forgotIntent = new Intent(userlogin.this, forgotpswrd.class);
                 forgotIntent.putExtra("Mobile_id", mobile_id);
-                Toast.makeText(userlogin.this, mobile_id, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(userlogin.this, mobile_id, Toast.LENGTH_SHORT).show();
                 startActivity(forgotIntent);
 
             }

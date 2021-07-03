@@ -10,14 +10,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class selectsection extends AppCompatActivity {
-Button worker,leader,panchayat;
+Button worker,leader,Admin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectsection);
         leader=(Button) findViewById(R.id.button);
         worker=(Button) findViewById(R.id.button2);
-        panchayat=(Button)findViewById(R.id.button3);
+        Admin=(Button)findViewById(R.id.button3);
         worker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,10 +32,10 @@ Button worker,leader,panchayat;
                 startActivity(intent1);
             }
         });
-        panchayat.setOnClickListener(new View.OnClickListener() {
+        Admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2=new Intent(selectsection.this,panchayat.class);
+                Intent intent2=new Intent(selectsection.this,adminlogin.class);
                 startActivity(intent2);
             }
         });

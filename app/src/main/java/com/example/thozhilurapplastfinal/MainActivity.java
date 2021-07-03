@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity  {
             public void run() {
 
 
-                  SharedPreferences lDetails =  getSharedPreferences("logdetails", MODE_PRIVATE);
+                /*  SharedPreferences lDetails =  getSharedPreferences("logdetails", MODE_PRIVATE);
                   check_ID = lDetails.getString("mobile","0");
                   check_Password = lDetails.getString("password1","0");
 
@@ -126,13 +126,13 @@ public class MainActivity extends AppCompatActivity  {
                       });
 
 
-                  }
-                  else
-                  {
+                  }*/
+                 // else
+                  //{
                       Intent intent=new Intent(MainActivity.this,selectsection.class);
                       startActivity(intent);
                       finish();
-                  }
+                  //}
 
       }
   },5000);

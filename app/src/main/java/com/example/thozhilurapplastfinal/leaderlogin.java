@@ -62,8 +62,8 @@ TextView forgotpassword;
                   }
 
                   for(final String data:list) {
-                      Toast.makeText(leaderlogin.this, data, Toast.LENGTH_SHORT).show();
-                      Toast.makeText(leaderlogin.this,"hai", Toast.LENGTH_SHORT).show();
+                   //   Toast.makeText(leaderlogin.this, data, Toast.LENGTH_SHORT).show();
+                     // Toast.makeText(leaderlogin.this,"hai", Toast.LENGTH_SHORT).show();
                       panchyat.add(data);
                   }
                   pid.setAdapter(arrayAdapter);
@@ -95,11 +95,11 @@ TextView forgotpassword;
 
                     }
                     for (final String data : list) {
-                        Toast.makeText(leaderlogin.this,data , Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(leaderlogin.this,data , Toast.LENGTH_SHORT).show();
                         if (data.equals(user_id.toString())) {
 
                             password_id = password.getText().toString();
-                            Toast.makeText(leaderlogin.this, password_id, Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(leaderlogin.this, password_id, Toast.LENGTH_SHORT).show();
                             DatabaseReference fb_read = FirebaseDatabase.getInstance().getReference("users" + "/" + "Panchayat"+"/" + panchayatidname+"/" + "leaderlogin" + "/" + user_id + "/" + "password");
                             fb_read.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -107,11 +107,12 @@ TextView forgotpassword;
                                    String pass = snapshot.getValue(String.class);
 
                                     if (pass.equals(password_id.toString())) {
-                                        Toast.makeText(leaderlogin.this, pass, Toast.LENGTH_SHORT).show();
+                                     //   Toast.makeText(leaderlogin.this, pass, Toast.LENGTH_SHORT).show();
                                        Intent login = new Intent(leaderlogin.this, leaderfirstpage.class);
 
                                         login.putExtra("userid_id", user_id);//change code here
-                                        Toast.makeText(leaderlogin.this, panchayatidname, Toast.LENGTH_SHORT).show();
+                                        login.putExtra("panchayatname",panchayatidname );
+                                      //  Toast.makeText(leaderlogin.this, panchayatidname, Toast.LENGTH_SHORT).show();
 
                                        // bundle.putString("panchayatname_id",panchayatidname);
                                         //.putExtras(bundle);

@@ -23,7 +23,7 @@ public class editpassword extends AppCompatActivity {
         Bundle forgetPassword=getIntent().getExtras();
         if(forgetPassword!=null){
             user=forgetPassword.getString("user_id");
-            //  Toast.makeText(MainActivity.this,user, Toast.LENGTH_SHORT).show();
+
         }
         password1=findViewById(R.id.passwordEditText);
         password2=findViewById(R.id.confirmpasswordEditText);
@@ -37,7 +37,7 @@ public class editpassword extends AppCompatActivity {
 
                 if(password.equals(confirmpassword)) {
                     FirebaseDatabase regDatabase = FirebaseDatabase.getInstance();
-                    String path = "users"+"/"+"workers"+"/" + user + "profile"+"/"+password1;
+                    String path = "users"+"/"+"workers"+"/" + user + "/"+"profile"+"/"+"password1";
                     DatabaseReference passwordReference = regDatabase.getReference(path );
                     passwordReference.setValue(password);
                     Intent toLoginPage=new Intent(editpassword.this,userlogin.class);

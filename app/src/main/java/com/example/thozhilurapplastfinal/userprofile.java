@@ -41,19 +41,21 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.squareup.picasso.Picasso.setSingletonInstance;
 
  public class userprofile extends AppCompatActivity {
-    String passed_id;
+    String passed_id,num,id,test;
     Button ret;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference getRef1,getRef2,getRef4,image;
+    DatabaseReference getRef1,getRef2,getRef4,image,getRef5;
     private StorageReference mstorageref;
      ImageView imageView;
      private Uri imageuri;
      private static final int PICK_IMAGE_REQUEST = 1;
-     TextView displayname,displaynumber,logout,upload,choose;
+     TextView displayname,displaynumber,logout,upload,choose,displaycard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,26 +69,87 @@ import static com.squareup.picasso.Picasso.setSingletonInstance;
         if (login != null) {
             passed_id = login.getString("Mobile_id");
 
-            Toast.makeText(userprofile.this, passed_id, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(userprofile.this, passed_id, Toast.LENGTH_SHORT).show();
 
         }
-        ret=(Button)findViewById(R.id.button1);
-        choose=(TextView)findViewById(R.id.chooseimage);
-        upload=(TextView)findViewById(R.id.upload);
+
+       // choose=(TextView)findViewById(R.id.chooseimage);
+       // upload=(TextView)findViewById(R.id.upload);
         imageView=(ImageView)findViewById(R.id.roundedimage);
         displayname=(TextView)findViewById(R.id.displayname);
         displaynumber=(TextView)findViewById(R.id.displaymob);
+        displaycard=(TextView)findViewById(R.id.displaycard);
         logout=(TextView)findViewById(R.id.logouttext);
         mstorageref = FirebaseStorage.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "Applydetails" + "/" + "photo");
         getRef1 = FirebaseDatabase.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "profile" );
-        getRef2 = FirebaseDatabase.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "Applydetails" + "/" + "photo" );
+        getRef2 = FirebaseDatabase.getInstance().getReference("users" + "/" + "workers" + "/" +passed_id + "/" + "Applydetails" + "/" + "photo" );
         getRef4 = FirebaseDatabase.getInstance().getReference("users" + "/" + "workers" + "/" + passed_id + "/" + "Applydetails" + "/" + "photo" );
+
         getRef1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String test=snapshot.child("name").getValue(String.class);
-                displayname.setText(test);
-                displaynumber.setText(snapshot.child("mobile").getValue(String.class));
+                String name1=snapshot.child("name").getValue(String.class);
+                displayname.setText(name1);
+                 num=snapshot.child("mobile").getValue(String.class);
+                displaynumber.setText(num);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+       DatabaseReference fb_to_read = FirebaseDatabase.getInstance().getReference("users"+"/"+"Panchayat");
+        fb_to_read.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> list=new ArrayList<String>();
+                for (DataSnapshot dsp : snapshot.getChildren()){
+                    list.add(String.valueOf(dsp.getKey()));
+                }
+                for(final String data:list) {
+
+                    DatabaseReference fb_to_read = FirebaseDatabase.getInstance().getReference("users"+"/"+"Panchayat"+"/"+data+"/"+"cardno");
+                    fb_to_read.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            List<String> list=new ArrayList<String>();
+                            for (DataSnapshot dsp : snapshot.getChildren()){
+                                list.add(String.valueOf(dsp.getKey()));
+                            }
+                            for(final String data1:list) {
+
+
+                                getRef5 = FirebaseDatabase.getInstance().getReference("users"+"/"+"Panchayat"+"/"+data+"/"+"cardno"+"/"+data1);
+                                getRef5.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                      //  Toast.makeText(userprofile.this, "num"+num, Toast.LENGTH_SHORT).show();
+                                        if(data1.equals(num))
+                                        {
+                                        //    Toast.makeText(userprofile.this, "data1"+data1, Toast.LENGTH_SHORT).show();
+                                             test=snapshot.child("cardno").getValue(String.class);
+                                            displaycard.setText(test);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
             }
 
             @Override
@@ -118,34 +181,36 @@ import static com.squareup.picasso.Picasso.setSingletonInstance;
                     case R.id.Profileworkers:
                          return;
                     case R.id.workdetails:
-                        Intent intent1 = new Intent(userprofile.this, workdetails.class);
-                        intent1.putExtra("usermob_id", passed_id);
-                        startActivity(intent1);
+                        Intent intent1 = new Intent(userprofile.this, workersdetails.class);
+                        intent1.putExtra("Mobile_id", passed_id);
+                        intent1.putExtra("cardno",test);
+                        startActivity(intent1);//
                         overridePendingTransition(0, 0);
                          return;
                     case R.id.Applyworker:
                         startActivity(new Intent(getApplicationContext(), applyworker.class));
                         Intent intent2 = new Intent(userprofile.this, applyworker.class);
-                        intent2.putExtra("usermob_id", passed_id);
+                        intent2.putExtra("Mobile_id", passed_id);
+                        intent2.putExtra("cardno", test);
                         startActivity(intent2);
                         overridePendingTransition(0, 0);
                          return;
                 }
             }
         });
-        choose.setOnClickListener(new View.OnClickListener() {
+      /*  choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openFileChooser();
 
             }
-        });
-        upload.setOnClickListener(new View.OnClickListener() {
+        });*/
+     /*   upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadfile();
             }
-        });
+        });*/
        /* ret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +244,7 @@ import static com.squareup.picasso.Picasso.setSingletonInstance;
 
 
     }
-     private void openFileChooser() {
+    /* private void openFileChooser() {
          Intent intent = new Intent();
          intent.setType("image/*");
          intent.setAction(Intent.ACTION_GET_CONTENT);

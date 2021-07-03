@@ -36,10 +36,11 @@ public class applywork extends AppCompatActivity {
     String passed_id=null;
     private StorageReference m1storageref;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference getRef1, getRef2;
+    DatabaseReference getRef1, getRef2,getRef3;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageuri;
     int num=0;
+    int cnt=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +57,13 @@ public class applywork extends AppCompatActivity {
 
         }
 
+
         getRef1 = FirebaseDatabase.getInstance().getReference("users" + "/" + "leader" + "/" + passed_id+"/"+"applywork");
       //  getRef2 = FirebaseDatabase.getInstance().getReference("users" + "/" + "leader"+ "/"  +"applycount");
+        getRef3 = FirebaseDatabase.getInstance().getReference("users"+"/"+"leader"+"/"+ passed_id+"/" + "applywork"+"/"+"count");
+      
 
-        m1storageref = FirebaseStorage.getInstance().getReference("users" + "/" + "leader" + "/" +passed_id+"/"+ "applywork");
+        m1storageref = FirebaseStorage.getInstance().getReference("users" + "/" + "leader" + "/" +passed_id+"/"+ "applywork"+"/"+"photo");
 
        chooseimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,32 +72,41 @@ public class applywork extends AppCompatActivity {
             }
        });
 
-         getcount();
+        // getcount();
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 name1 = name.getText().toString();
                 cardno1 = cardno.getText().toString();
                 mobile1 = mobile.getText().toString();
                 userid ="users"+"/"+"leader"+"/"+ passed_id+"/" + "applywork" ;
                 String details=userid+"/"+cardno1;
+
                 if(mobile1.length()==10) {
 
 
                     String leadername = details + "/" + "name";
                     String leaderno = details + "/" + "cardno";
                     String mobileno = details + "/" + "mobileno";
-
+                   // String count= details+"/"+"count";
                     DatabaseReference leadername1 = mDatabase.getReference(leadername);
                     DatabaseReference leaderno1 = mDatabase.getReference(leaderno);
                     DatabaseReference leadermobileno1 = mDatabase.getReference(mobileno);
-                    DatabaseReference applycount = mDatabase.getReference("users" + "/" + "leader" + "/" +passed_id +"/"+ "applywork"+"/"+"applycount");
-                     num=num+1;
+                   // DatabaseReference leadercount1 = mDatabase.getReference("users"+"/"+"leader"+"/"+ passed_id+"/" + "applywork"+"/"+cardno1+"/"+"count");
+                    //DatabaseReference applycount = mDatabase.getReference("users" + "/" + "leader" + "/" +passed_id +"/"+"count"+"/"+"applycount");
+
+                   // num=num+1;
+                    //cnt=cnt+1;
                     leadername1.setValue(name1);
                     leaderno1.setValue(cardno1);
                     leadermobileno1.setValue(mobile1);
-                    applycount.setValue(num);
-                 //   applyverify.setText("Applied");
+                   // leadercount1.setValue(num);
+                  //  applycount.setValue(num);
+                    Toast.makeText(applywork.this, "applied successfully", Toast.LENGTH_SHORT).show();
+
+                    // applyverify.setText("Applied")
                     // finish();
                     uploadfile();
                 }
@@ -105,9 +118,9 @@ public class applywork extends AppCompatActivity {
 
     }
 
-    private void getcount()
+  /*  private void getcount()
     {
-        DatabaseReference fb_to_read = FirebaseDatabase.getInstance().getReference("users" + "/" + "leader" + "/" +passed_id +"/"+ "applywork");
+        DatabaseReference fb_to_read = FirebaseDatabase.getInstance().getReference("users" + "/" + "leader" + "/" +passed_id +"/"+"count");
         fb_to_read.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -121,7 +134,7 @@ public class applywork extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 
 
 
@@ -150,9 +163,9 @@ public class applywork extends AppCompatActivity {
         }
 
     private void uploadfile() {
-        getRef1=FirebaseDatabase.getInstance().getReference("users" + "/" + "leader" + "/" +passed_id+"/"+"applywork"+"/"+cardno1);
+       getRef2=FirebaseDatabase.getInstance().getReference("users" + "/" + "leader" + "/" +passed_id+"/"+"applywork"+"/"+cardno1+"/"+"photo");
 
-        m1storageref = FirebaseStorage.getInstance().getReference("users" + "/" + "leader"+"/" +passed_id+ "/" +  "applywork"+"/"+cardno1 );
+        m1storageref = FirebaseStorage.getInstance().getReference("users" + "/" + "leader"+"/" +passed_id+ "/" +  "applywork"+"/"+cardno1+"/"+"photo" );
 
         if ( imageuri != null) {
 
@@ -162,10 +175,19 @@ public class applywork extends AppCompatActivity {
                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                        @Override
                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           upload upload1 = new upload(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+                          /* upload upload1 = new upload(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
                            String uploadid = getRef1.push().getKey();
                             getRef1.child(uploadid).setValue(upload1);
-                           Toast.makeText(applywork.this, "upload Successful", Toast.LENGTH_SHORT).show();
+                           Toast.makeText(applywork.this, "upload Successful", Toast.LENGTH_SHORT).show();*/
+                           fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                               @Override
+                               public void onSuccess(Uri uri) {
+                                   upload up=new upload(uri.toString());
+                                   String uploadId = getRef2.push().getKey();
+                                   getRef2.child(uploadId).setValue(up);
+
+                               }
+                           });
 
                         }
                     })

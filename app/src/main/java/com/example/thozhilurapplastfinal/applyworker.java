@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -40,20 +41,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class applyworker extends AppCompatActivity {
-    String user_mobid;
+    String user_mobid,cardno;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference getRef1, getRef2, getRef3,getRef4;
     EditText name, address, adharno, bankno;
     TextView applverify, choosepic, chooseadhar, uploadpic, adharpic;
     Button pic, applyuser;
     Spinner panchayat;
-    String name1, address1, adharno1, bankno1, user_id;
+    String name1;
+    String address1;
+    String adharno1;
+    String bankno1;
+    String user_id;
+    String mob;
+    EditText mobile;
     ImageView mImageView;
     public String panchayatidname;
     private StorageReference m1storageref;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageuri;
     List<String> panchyatid = new ArrayList<>();
+
 //ValueEventListener listeneer;
 //ArrayAdapter<String> adapter;
 //ArrayList<String> spinnerDatalist;
@@ -63,18 +71,17 @@ public class applyworker extends AppCompatActivity {
         setContentView(R.layout.activity_applyworker);
         Bundle login = getIntent().getExtras();
         if (login != null) {
-            user_mobid = login.getString("usermob_id");
-
-            Toast.makeText(applyworker.this, user_mobid, Toast.LENGTH_SHORT).show();
+            user_mobid = login.getString("Mobile_id");
+             cardno=login.getString("cardno");
+           // Toast.makeText(applyworker.this, user_mobid, Toast.LENGTH_SHORT).show();
         }
-
 
         name = (EditText) findViewById(R.id.edit_name);
         address = (EditText) findViewById(R.id.edit_address);
         adharno = (EditText) findViewById(R.id.edit_adhar);
         bankno = (EditText) findViewById(R.id.edit_bank);
-        applverify = (TextView) findViewById(R.id.applystatus);
 
+        mobile = (EditText)findViewById(R.id.edit_mobile);
         chooseadhar = (TextView) findViewById(R.id.adharpictextview);
         applyuser = (Button) findViewById(R.id.apply);
         panchayat = (Spinner) findViewById(R.id.panchayatname);
@@ -99,7 +106,7 @@ public class applyworker extends AppCompatActivity {
                                                      list.add(String.valueOf(dsp.getKey()));
                                                  }
                                                  for(final String data:list) {
-                                                     Toast.makeText(applyworker.this, data, Toast.LENGTH_SHORT).show();
+                                                    // Toast.makeText(applyworker.this, data, Toast.LENGTH_SHORT).show();
                                                      panchyatid.add(data);
                                                  }
                                                 // adapter = new ArrayAdapter<String>(applyworker.this, android.R.layout.simple_spinner_dropdown_item,spinnerDatalist);
@@ -131,9 +138,10 @@ public class applyworker extends AppCompatActivity {
                 address1 = address.getText().toString();
                 adharno1 = adharno.getText().toString();
                 bankno1 = bankno.getText().toString();
+                mob=mobile.getText().toString();
                 panchayatidname= panchayat.getSelectedItem().toString();
                 user_id = "users" + "/" + "workers" + "/" + user_mobid;
-                Toast.makeText(applyworker.this, user_id, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(applyworker.this, user_id, Toast.LENGTH_SHORT).show();
 
                 String details = user_id + "/" + "Applydetails";
                 String workername = details + "/" + "name";
@@ -141,7 +149,7 @@ public class applyworker extends AppCompatActivity {
                 String adharno = details + "/" + "adharno";
                 String bankno = details + "/" + "bankno";
                 String panchaytname=details +"/"+"panchayatname";
-
+                String mobile1 = details +"/"+"mobile";
 
 
                 DatabaseReference Workername1 = mDatabase.getReference(workername);
@@ -149,16 +157,18 @@ public class applyworker extends AppCompatActivity {
                 DatabaseReference workeradharno1 = mDatabase.getReference(adharno);
                 DatabaseReference workerbankno1 = mDatabase.getReference(bankno);
                 DatabaseReference workerpanchayat = mDatabase.getReference(panchaytname);
+                DatabaseReference workermobile = mDatabase.getReference(mobile1);
 
                 Workername1.setValue(name1);
                 workeraddress1.setValue(address1);
                 workeradharno1.setValue(adharno1);
                 workerbankno1.setValue(bankno1);
                 workerpanchayat.setValue(panchayatidname);
+                workermobile.setValue(mob);
                 uploadfile();
                // uploadfile1();
 
-
+                applyuser.setEnabled(false);
             }
         });
 
@@ -171,14 +181,14 @@ public class applyworker extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.Profileworkers:
                         Intent intent1 = new Intent(applyworker.this, userprofile.class);
-                        intent1.putExtra("usermob_id", user_mobid);
+                        intent1.putExtra("Mobile_id", user_mobid);
                         startActivity(intent1);
                         overridePendingTransition(0, 0);
                         return;
                     case R.id.workdetails:
-
                         Intent intent = new Intent(applyworker.this, workersdetails.class);
-                        intent.putExtra("usermob_id", user_mobid);
+                        intent.putExtra("Mobile_id", user_mobid);
+                        intent.putExtra("cardno", cardno);
                         startActivity(intent);
                         // startActivity(new Intent(getApplicationContext(), workersdetails.class));
                         overridePendingTransition(0, 0);
@@ -224,12 +234,22 @@ public class applyworker extends AppCompatActivity {
 
             fileReference.putFile(imageuri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            upload upload1 = new upload(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    upload up=new upload(uri.toString());
+                                    String uploadId = getRef3.push().getKey();
+                                    getRef3.child(uploadId).setValue(up);
+
+                                }
+                            });
+                          /*  upload upload1 = new upload(taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
                             String uploadid = getRef3.push().getKey();
                             getRef3.child(uploadid).setValue(upload1);
-                            Toast.makeText(applyworker.this, "upload Successful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(applyworker.this, "upload Successful", Toast.LENGTH_SHORT).show();*/
 
                         }
                     })

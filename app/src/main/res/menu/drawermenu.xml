@@ -5,5 +5,6 @@
 
     <item android:id="@+id/changepassword" android:title="Change Password" android:icon="@drawable/ic_baseline_password_24" />
     <item android:id="@+id/logout" android:title="Logout" android:icon="@drawable/ic_baseline_logout_24" />
-    <item android:id="@+id/about" android:title="About Us" android:icon="@drawable/ic_baseline_apps_24"/>
+    <item android:id="@+id/notification" android:title="Notification" android:icon="@drawable/ic_baseline_apps_24"/>
+
 </menu>

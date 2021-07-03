@@ -107,8 +107,8 @@ android:background="@drawable/backimagesupdownnew"
 
     <TextView
         android:id="@+id/adharpictextview"
-        android:layout_width="165dp"
-        android:layout_height="38dp"
+        android:layout_width="160dp"
+        android:layout_height="30dp"
         android:layout_below="@+id/edit_adhar"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="20dp"
@@ -142,25 +142,37 @@ android:background="@drawable/backimagesupdownnew"
         android:layout_marginRight="2dp"
         android:layout_toRightOf="@+id/bank_worker" />
 
+    <TextView
+        android:id="@+id/mobile_worker"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_below="@+id/bank_worker"
+        android:layout_marginTop="25dp"
+        android:text=" Mob"
+        android:textColor="#0E0E0E"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/edit_mobile"
+        android:layout_width="306dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_bank"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="2dp"
+        android:layout_toRightOf="@+id/bank_worker" />
+
     <Button
         android:id="@+id/apply"
         android:layout_width="105dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bank_worker"
+        android:layout_below="@+id/mobile_worker"
         android:layout_marginLeft="46dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="-11dp"
         android:text="Apply"
         android:textColor="@color/black"
         app:backgroundTint="@color/white" />
-
-    <TextView
-        android:id="@+id/applystatus"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
-        android:layout_below="@+id/edit_bank"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="25dp"
-        android:layout_toRightOf="@+id/apply" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomnavigationview"

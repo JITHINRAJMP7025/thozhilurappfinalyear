@@ -56,7 +56,7 @@ public class forgotpswrd extends AppCompatActivity  implements
     private String mVerificationId;
     private String mobileNumberString;
     private String user;
-
+    String mobileno;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
@@ -77,6 +77,7 @@ public class forgotpswrd extends AppCompatActivity  implements
     //private Button mSignOutButton;
     private Button verifyuserButton;
     String useridString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,17 +91,17 @@ public class forgotpswrd extends AppCompatActivity  implements
 
         //mStatusText = findViewById(R.id.status);
         //mDetailText = findViewById(R.id.detail);
-        phoneNumberTextView=(TextView)findViewById(R.id.phNumberTextView);
+        phoneNumberTextView = (TextView) findViewById(R.id.phNumberTextView);
 
         mPhoneNumberField = findViewById(R.id.field_phone_number);
         mVerificationField = findViewById(R.id.field_verification_code);
-        useridEditText=findViewById(R.id.useridEditText);
+        useridEditText = findViewById(R.id.useridEditText);
 
         mStartButton = findViewById(R.id.button_start_verification);
         mVerifyButton = findViewById(R.id.button_verify_phone);
         mResendButton = findViewById(R.id.button_resend);
         //mSignOutButton = findViewById(R.id.sign_out_button);
-        verifyuserButton=findViewById(R.id.verifyuserButton);
+        verifyuserButton = findViewById(R.id.verifyuserButton);
 
         Bundle forgetPassword = getIntent().getExtras();
         if (forgetPassword != null) {
@@ -112,17 +113,18 @@ public class forgotpswrd extends AppCompatActivity  implements
         verifyuserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                useridString=useridEditText.getText().toString();
+                useridString = useridEditText.getText().toString();
 
-                DatabaseReference fb_to_read = FirebaseDatabase.getInstance().getReference("users"+"/"+"workers"+"/"+useridString+"/"+"profile");
+                DatabaseReference fb_to_read = FirebaseDatabase.getInstance().getReference("users" + "/" + "workers" + "/" + useridString + "/" + "profile");
 
                 // Toast.makeText(this, sentChittyID, Toast.LENGTH_SHORT).show();
                 fb_to_read.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        mobileNumberString="+91"+snapshot.child("mobile").getValue(String.class);
-                        phoneNumberTextView.setText("Sending Verification Number To "+mobileNumberString.substring(3,5)+"***"+mobileNumberString.substring(10,13));
-                        Toast.makeText(forgotpswrd.this, mobileNumberString, Toast.LENGTH_SHORT).show();
+
+                        mobileNumberString = "+91" + snapshot.child("mobile").getValue(String.class);
+                        phoneNumberTextView.setText("Sending Verification Number To " + mobileNumberString.substring(3, 5) + "***" + mobileNumberString.substring(10, 13));
+                       // Toast.makeText(forgotpswrd.this, mobileNumberString, Toast.LENGTH_SHORT).show();
 
                         mPhoneNumberField.setText(mobileNumberString);
                     }
@@ -135,9 +137,6 @@ public class forgotpswrd extends AppCompatActivity  implements
 
             }
         });
-
-
-
 
 
         // Assign click listeners
@@ -218,6 +217,7 @@ public class forgotpswrd extends AppCompatActivity  implements
             }
         };
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -243,6 +243,7 @@ public class forgotpswrd extends AppCompatActivity  implements
         super.onRestoreInstanceState(savedInstanceState);
         mVerificationInProgress = savedInstanceState.getBoolean(KEY_VERIFY_IN_PROGRESS);
     }
+
     private void startPhoneNumberVerification(String phoneNumber) {
         // [START start_phone_auth]
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -255,12 +256,14 @@ public class forgotpswrd extends AppCompatActivity  implements
 
         mVerificationInProgress = true;
     }
+
     private void verifyPhoneNumberWithCode(String verificationId, String code) {
         // [START verify_with_code]
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         // [END verify_with_code]
         signInWithPhoneAuthCredential(credential);
     }
+
     private void resendVerificationCode(String phoneNumber,
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -271,6 +274,7 @@ public class forgotpswrd extends AppCompatActivity  implements
                 mCallbacks,         // OnVerificationStateChangedCallbacks
                 token);             // ForceResendingToken from callbacks
     }
+
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -280,8 +284,8 @@ public class forgotpswrd extends AppCompatActivity  implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
 
-                            Intent changePasssword=new Intent(forgotpswrd.this,editpassword.class);
-                           // changePasssword.putExtra("user_id",useridString);
+                            Intent changePasssword = new Intent(forgotpswrd.this, editpassword.class);
+                             changePasssword.putExtra("user_id",useridString);
                             startActivity(changePasssword);
                             finish();
                             // FirebaseUser user = task.getResult().getUser();
@@ -398,6 +402,7 @@ public class forgotpswrd extends AppCompatActivity  implements
             //  mDetailText.setText(getString(R.string.firebase_status_fmt, user.getUid()));
         }
     }
+
     private boolean validatePhoneNumber() {
         String phoneNumber = mPhoneNumberField.getText().toString();
         if (TextUtils.isEmpty(phoneNumber)) {
@@ -407,6 +412,7 @@ public class forgotpswrd extends AppCompatActivity  implements
 
         return true;
     }
+
     private void enableViews(View... views) {
         for (View v : views) {
             v.setEnabled(true);
@@ -418,6 +424,7 @@ public class forgotpswrd extends AppCompatActivity  implements
             v.setEnabled(false);
         }
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -446,6 +453,7 @@ public class forgotpswrd extends AppCompatActivity  implements
         }
     }
 }
+
 
 
 

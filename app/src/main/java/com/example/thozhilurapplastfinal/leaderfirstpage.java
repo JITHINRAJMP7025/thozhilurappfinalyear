@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class leaderfirstpage extends AppCompatActivity {
 Button apply,workdetails;
-String passed_id,panchayatid;
+String passed_id,panchayatid,panchayatname;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference getRef1;
     private DrawerLayout mDrawerlayout;
@@ -39,8 +39,8 @@ String passed_id,panchayatid;
         Bundle login = getIntent().getExtras();
         if (login != null) {
             passed_id = login.getString("userid_id");
-           // panchayatid=login.getString("panchayatname_id");
-            Toast.makeText(leaderfirstpage.this, panchayatid, Toast.LENGTH_SHORT).show();
+            panchayatid=login.getString("panchayatname");
+           // Toast.makeText(leaderfirstpage.this, panchayatid, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -78,6 +78,14 @@ String passed_id,panchayatid;
                         intent1.putExtra("userid_id", passed_id);
                         startActivity(intent1);
                         break;
+
+                    case R.id.notification:
+                        Intent intent3 = new Intent(leaderfirstpage.this, leadernotification.class);
+                        intent3.putExtra("userid_id", passed_id);
+                        intent3.putExtra("panchayatname", panchayatid);
+                        startActivity(intent3);
+                        break;
+
                 }
                 return false;
 

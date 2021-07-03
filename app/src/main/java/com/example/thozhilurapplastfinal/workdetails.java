@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class workdetails extends AppCompatActivity {
- String user_mobid;
+ String passed_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,9 +20,9 @@ public class workdetails extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.workdetails);
         Bundle login = getIntent().getExtras();
         if (login != null) {
-            user_mobid = login.getString("usermob_id");
+            passed_id = login.getString("Mobile_id");
 
-            Toast.makeText(workdetails.this, user_mobid, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(workdetails.this, passed_id, Toast.LENGTH_SHORT).show();
         }
         bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
@@ -30,17 +30,17 @@ public class workdetails extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.Profileworkers:
                         Intent intent1 = new Intent(workdetails.this, userprofile.class);
-                       // intent1.putExtra("usermob_id", user_mobid);
+                        intent1.putExtra("Mobile_id", passed_id);
                         startActivity(intent1);
                         overridePendingTransition(0, 0);
                         return;
                     case R.id.workdetails:
-                        overridePendingTransition(0, 0);
                         return;
                     case R.id.Applyworker:
-                        Intent intent = new Intent(workdetails.this, workersdetails.class);
-                        intent.putExtra("usermob_id", user_mobid);
+                        Intent intent = new Intent(workdetails.this, applyworker.class);
+                        intent.putExtra("Mobile_id", passed_id);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
                         return;
                 }
             }

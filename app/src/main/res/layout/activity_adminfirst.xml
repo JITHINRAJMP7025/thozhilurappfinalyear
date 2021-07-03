@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backimagesupdownnew"
-    tools:context=".panchayat">
+    tools:context=".adminfirst">
 
     <Button
         android:id="@+id/button5"
@@ -20,20 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/logout"
-        android:layout_width="164dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="76dp"
-        android:gravity="center_horizontal"
-        android:text="logout"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5"
-        tools:ignore="MissingConstraints" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

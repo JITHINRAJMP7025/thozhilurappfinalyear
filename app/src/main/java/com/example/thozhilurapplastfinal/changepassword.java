@@ -38,7 +38,7 @@ public class changepassword extends AppCompatActivity {
         if (login != null) {
             passed_id = login.getString("userid_id");
 
-            Toast.makeText(changepassword.this, passed_id, Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(changepassword.this, passed_id, Toast.LENGTH_SHORT).show();
 
         }
         reset.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +53,7 @@ public class changepassword extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                String pass = snapshot.getValue(String.class);
-                Toast.makeText(changepassword.this, pass, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(changepassword.this, pass, Toast.LENGTH_SHORT).show();
                 if (pass.equals(pswrd.toString())) {
 
                     newpswrd1 = newpassword1.getText().toString();
